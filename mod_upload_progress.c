@@ -265,6 +265,16 @@ static void *upload_progress_create_server_config(apr_pool_t *p, server_rec *s)
     ServerConfig *config = (ServerConfig *)apr_pcalloc(p, sizeof(ServerConfig));
     config->cache_file = apr_pstrdup(p, CACHE_FILENAME);
     config->cache_bytes = 51200;
+/*
+#include <fcntl.h>
+    up_log(APLOG_MARK, APLOG_DEBUG, 0, s, "config=0x%x", config);
+    int f = open("create_server_config.log", O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
+    char msg[255];
+    sprintf(msg, "config=0x%x  server(%s, line %u, virtual=%i) hostname=%s process=%s\n",
+      config, s->defn_name, s->defn_line_number, s->is_virtual, s->server_hostname, (s->process ? s->process->short_name : NULL));
+    write(f, msg, strlen(msg));
+    close(f);
+*/
     return config;
 }
 
